@@ -1,4 +1,4 @@
-package controller
+package ping
 
 import (
 	"net/http"

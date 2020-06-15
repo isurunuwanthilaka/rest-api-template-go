@@ -1,7 +1,9 @@
 package app
 
-import "github.com/isurunuwanthilaka/rest-api-template/controller"
+import (
+	"github.com/isurunuwanthilaka/rest-api-template/controller/ping"
+)
 
 func mapUrls() {
-	router.GET("/ping", controller.Ping)
+	router.GET("/ping", ping.Ping)
 }
