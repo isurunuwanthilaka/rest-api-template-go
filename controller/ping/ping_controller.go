@@ -1,9 +1,8 @@
 package ping
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 // Ping ping service
