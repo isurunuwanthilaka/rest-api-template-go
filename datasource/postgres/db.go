@@ -35,7 +35,7 @@ func init() {
 	db = conn
 }
 
-//returns a handle to the DB object
+// GetDB returns a handle to the DB object
 func GetDB() *gorm.DB {
 	return db
 }

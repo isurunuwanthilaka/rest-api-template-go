@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/isurunuwanthilaka/rest-api-template/app"
+	"rest-api-template-go/app"
 )
 
 func main() {

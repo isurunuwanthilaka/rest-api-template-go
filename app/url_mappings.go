@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/isurunuwanthilaka/rest-api-template/controller/ping"
+	"rest-api-template-go/controller/ping"
 )
 
 func mapUrls() {
