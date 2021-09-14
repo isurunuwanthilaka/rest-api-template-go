@@ -2,6 +2,9 @@ package controller
 
 import (
 	"net/http"
+	"rest-api-template-go/dto"
+	"rest-api-template-go/service"
+	"rest-api-template-go/utils/errors"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,7 +14,19 @@ func GetBooks(c *gin.Context) {
 }
 
 func AddBook(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
+	var newBook dto.BookReqDto
+	if err := c.BindJSON(&newBook); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, errors.NewBadRequestError(err.Error()))
+		return
+	}
+
+	res, err := service.AddBook(newBook)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, res)
 }
 
 func GetBook(c *gin.Context) {

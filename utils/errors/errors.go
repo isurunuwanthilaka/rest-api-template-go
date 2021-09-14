@@ -1,23 +1,25 @@
 package errors
 
-type RestErr struct {
+import "net/http"
+
+type RestError struct {
 	Message string `json:"message"`
 	Status  int    `json:"status"`
 	Error   string `json:"error"`
 }
 
-func NewError(message string, status int, error string) *RestErr {
-	return &RestErr{
+func NewError(message string, status int, error string) *RestError {
+	return &RestError{
 		Message: message,
 		Status:  status,
 		Error:   error,
 	}
 }
 
-func NewBadRequestError(message string) *RestErr {
-	return &RestErr{
+func NewBadRequestError(message string) *RestError {
+	return &RestError{
 		Message: message,
-		Status:  400,
+		Status:  http.StatusBadRequest,
 		Error:   "bad_request",
 	}
 }
