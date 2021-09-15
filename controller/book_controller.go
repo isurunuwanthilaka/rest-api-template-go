@@ -5,6 +5,7 @@ import (
 	"rest-api-template-go/dto"
 	"rest-api-template-go/service"
 	"rest-api-template-go/utils/errors"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -30,7 +31,14 @@ func AddBook(c *gin.Context) {
 }
 
 func GetBook(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
+	id, _ := strconv.Atoi(c.Param("id"))
+	res, err := service.GetBook(uint(id))
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, res)
 }
 func UpdateBook(c *gin.Context) {
 	c.String(http.StatusOK, "pong")

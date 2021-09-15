@@ -13,6 +13,10 @@ import (
 	"gorm.io/gorm"
 )
 
+var (
+	db *gorm.DB
+)
+
 func init() {
 
 	e := godotenv.Load("dev.env") //Load .env file
@@ -21,7 +25,7 @@ func init() {
 	}
 
 	dbCreate, _ := strconv.ParseBool(os.Getenv("db_create"))
-	db := mysql.GetDB()
+	db = mysql.GetDB()
 
 	if dbCreate {
 		if err := db.AutoMigrate(&Status{}, &Gender{}, &Genre{}, &Author{}, &Book{}); err != nil {
@@ -56,8 +60,13 @@ type Book struct {
 }
 
 func (book *Book) Save() {
-	db := mysql.GetDB()
 	db.Create(&book)
 	db.Preload(clause.Associations).Find(&book, book.ID)
+}
 
+func GetBookById(id uint) Book {
+	var book Book
+	db = mysql.GetDB()
+	db.Preload(clause.Associations).Find(&book, id)
+	return book
 }

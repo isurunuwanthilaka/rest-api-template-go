@@ -24,3 +24,7 @@ func init() {
 func GetLogger() *log.Logger {
 	return logger
 }
+
+func Error(message string, v ...interface{}) {
+	logger.Printf(" [Error] "+message, v)
+}
