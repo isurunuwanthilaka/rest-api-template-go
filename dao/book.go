@@ -66,7 +66,12 @@ func (book *Book) Save() {
 
 func GetBookById(id uint) Book {
 	var book Book
-	db = mysql.GetDB()
 	db.Preload(clause.Associations).Find(&book, id)
 	return book
+}
+
+func GetBooks() []Book {
+	var books []Book
+	db.Preload(clause.Associations).Find(&books)
+	return books
 }

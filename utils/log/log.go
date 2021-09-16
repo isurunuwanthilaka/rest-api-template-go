@@ -28,3 +28,11 @@ func GetLogger() *log.Logger {
 func Error(message string, v ...interface{}) {
 	logger.Printf(" [Error] "+message, v)
 }
+
+func Info(message string, v ...interface{}) {
+	logger.Printf(" [INFO] "+message, v)
+}
+
+func Debug(message string, v ...interface{}) {
+	logger.Printf(" [DEBUG] "+message, v)
+}

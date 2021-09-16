@@ -11,7 +11,13 @@ import (
 )
 
 func GetBooks(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
+	res, err := service.GetBooks()
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, res)
 }
 
 func AddBook(c *gin.Context) {

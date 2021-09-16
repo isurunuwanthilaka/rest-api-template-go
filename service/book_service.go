@@ -39,3 +39,23 @@ func GetBook(id uint) (*dto.BookResDto, error) {
 	}
 	return &res, nil
 }
+
+func GetBooks() (*[]dto.BookResDto, error) {
+
+	var res []dto.BookResDto
+
+	books := dao.GetBooks()
+
+	for _, book := range books {
+		var bookResDto = dto.BookResDto{
+			Id:      book.ID,
+			Summary: book.Summary,
+			Title:   book.Title,
+			Author:  book.Author.Name,
+			Genre:   book.Genre.Name,
+		}
+		res = append(res, bookResDto)
+	}
+
+	return &res, nil
+}
