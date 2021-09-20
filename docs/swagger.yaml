@@ -11,6 +11,19 @@ definitions:
       name:
         type: string
     type: object
+  dto.BookResDto:
+    properties:
+      author:
+        type: string
+      genre:
+        type: string
+      id:
+        type: integer
+      summary:
+        type: string
+      title:
+        type: string
+    type: object
   errors.RestError:
     properties:
       message:
@@ -61,4 +74,98 @@ paths:
       summary: Show all authors
       tags:
       - authors
+  /books:
+    get:
+      consumes:
+      - application/json
+      description: This will return list of books in the system
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.BookResDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.RestError'
+      summary: Show all books
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      description: This will add a book to the system
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BookResDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.RestError'
+      summary: Add a book
+      tags:
+      - books
+  /books/:id:
+    delete:
+      consumes:
+      - application/json
+      description: This will soft delete a book in the system given the book id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.RestError'
+      summary: Delete a book by id
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      description: This will return a book in the system given the book id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BookResDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.RestError'
+      summary: Get a book by id
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      description: This will update a book in the system given the book id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BookResDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.RestError'
+      summary: Update a book by id
+      tags:
+      - books
 swagger: "2.0"

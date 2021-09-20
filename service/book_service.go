@@ -59,3 +59,26 @@ func GetBooks() (*[]dto.BookResDto, error) {
 
 	return &res, nil
 }
+
+func DeleteBook(id uint) error {
+
+	if err := dao.DeleteBookById(id); err != nil {
+		log.Error("Book delete failed for id : %x", id)
+		return errors.NewBadRequestError("Book delete failed.")
+	}
+	return nil
+}
+
+func UpdateBook(newBook dto.BookReqDto, id uint) (*dto.BookResDto, error) {
+	var book = dao.Book{Title: newBook.Title, Summary: newBook.Summary, AuthorId: newBook.AuthorId, GenreId: newBook.GenreId, StatusId: 1}
+	book = dao.UpdateBook(book, id)
+
+	var res = dto.BookResDto{
+		Id:      book.ID,
+		Summary: book.Summary,
+		Title:   book.Title,
+		Author:  book.Author.Name,
+		Genre:   book.Genre.Name,
+	}
+	return &res, nil
+}

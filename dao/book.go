@@ -1,9 +1,9 @@
 package dao
 
 import (
-	"log"
 	"os"
 	"rest-api-template-go/datasource/mysql"
+	"rest-api-template-go/utils/log"
 	"strconv"
 
 	"gorm.io/gorm/clause"
@@ -21,7 +21,7 @@ func init() {
 
 	e := godotenv.Load("dev.env") //Load .env file
 	if e != nil {
-		log.Print(e)
+		log.Error("%s", e)
 	}
 
 	dbCreate, _ := strconv.ParseBool(os.Getenv("db_create"))
@@ -64,6 +64,14 @@ func (book *Book) Save() {
 	db.Preload(clause.Associations).Find(&book, book.ID)
 }
 
+func UpdateBook(newBook Book, id uint) Book {
+	var book Book
+	book.ID = id
+	db.Model(&book).Updates(Book{Title: newBook.Title, Summary: newBook.Summary})
+	db.Preload(clause.Associations).Find(&book, book.ID)
+	return book
+}
+
 func GetBookById(id uint) Book {
 	var book Book
 	db.Preload(clause.Associations).Find(&book, id)
@@ -74,4 +82,11 @@ func GetBooks() []Book {
 	var books []Book
 	db.Preload(clause.Associations).Find(&books)
 	return books
+}
+
+func DeleteBookById(id uint) error {
+	var book Book
+	book.ID = id
+	result := db.Delete(&book)
+	return result.Error
 }
